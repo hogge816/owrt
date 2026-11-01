@@ -61,6 +61,8 @@ UPDATE_PACKAGE "viking" "VIKINGYFY/packages" "main" "" "nikki-rs crash-rs luci-a
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev" "pkg"
 UPDATE_PACKAGE "passwall" "Openwrt-Passwall/openwrt-passwall" "main" "pkg"
 UPDATE_PACKAGE "passwall2" "Openwrt-Passwall/openwrt-passwall2" "main" "pkg"
+UPDATE_PACKAGE  "vmlinux-btf" "QiuSimons/vmlinux-btf" "master"
+UPDATE_PACKAGE  "daede" "kenzok8/openwrt-daede" "main"
 
 UPDATE_PACKAGE "diskmanager" "4IceG/luci-app-mini-diskmanager" "main"
 UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
