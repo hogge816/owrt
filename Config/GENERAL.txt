@@ -131,17 +131,36 @@ CONFIG_PACKAGE_usb-modeswitch=y
 CONFIG_PACKAGE_usbmuxd=y
 CONFIG_PACKAGE_usbutils=y
 CONFIG_PACKAGE_xz-utils=y
-# ebpf 依赖
+# ===== BPF 基础能力 =====
 CONFIG_KERNEL_DEBUG_INFO=y
 CONFIG_KERNEL_DEBUG_INFO_BTF=y
 CONFIG_KERNEL_DEBUG_INFO_REDUCED=n
-CONFIG_KERNEL_BPF_EVENTS=y
 CONFIG_KERNEL_CGROUP_BPF=y
-CONFIG_KERNEL_XDP_SOCKETS=y
+
+# ===== BPF 调试和追踪（非核心，但保留便于诊断）=====
+CONFIG_KERNEL_BPF_EVENTS=y
 CONFIG_KERNEL_KPROBES=y
+
+# ===== TC BPF =====
+# 如果当前 OpenWrt 分支提供这些 Kconfig 选项，建议启用
+CONFIG_KERNEL_NET_CLS_BPF=y
+CONFIG_KERNEL_NET_ACT_BPF=y
+CONFIG_KERNEL_NET_CLS_ACT=y
+CONFIG_KERNEL_NET_SCH_INGRESS=y
+
+# ===== XDP（非当前 eBPF 透明代理的必要条件）=====
+# 暂时可以关闭，除非后续确认 clash-rs 使用 AF_XDP
+# CONFIG_KERNEL_XDP_SOCKETS is not set
+
+# ===== 用户态诊断和工具 =====
+CONFIG_PACKAGE_bpftool=y
+CONFIG_PACKAGE_libbpf=y
+CONFIG_PACKAGE_tc-bpf=y
+
+# ===== TC 和网络命名空间 =====
 CONFIG_PACKAGE_kmod-sched-core=y
 CONFIG_PACKAGE_kmod-sched-bpf=y
-CONFIG_PACKAGE_kmod-xdp-sockets-diag=y
+CONFIG_PACKAGE_kmod-veth=y
 CONFIG_PACKAGE_kmod-veth=y
 CONFIG_PACKAGE_libbpf=y
 CONFIG_PACKAGE_bpftool=y
