@@ -57,7 +57,13 @@ UPDATE_PACKAGE "shadcn" "eamonxg/luci-theme-shadcn" "main"
 
 UPDATE_PACKAGE "momo" "nikkinikki-org/OpenWrt-momo" "main"
 UPDATE_PACKAGE "nikki" "nikkinikki-org/OpenWrt-nikki" "main"
-UPDATE_PACKAGE "nikki-rs" "CHKayanami/OpenWrt-nikki-rs" "main" "" "nikki-rs crash-rs luci-app-nikki-rs luci-i18n-nikki-rs-zh-cn"
+UPDATE_PACKAGE "nikki-rs" "CHKayanami/OpenWrt-nikki-rs" "main" "" "nikki-rs clash-rs luci-app-nikki-rs luci-i18n-nikki-rs-zh-cn"
+# Pin the core independently of the Nikki-RS frontend package version.
+CLASH_RS_MAKEFILE="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/../Packages/clash-rs/Makefile"
+if [[ ! -f ./package/OpenWrt-nikki-rs/clash-rs/Makefile ]] || ! cp "$CLASH_RS_MAKEFILE" ./package/OpenWrt-nikki-rs/clash-rs/Makefile; then
+	echo "Failed to install pinned clash-rs package" >&2
+	exit 1
+fi
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev" "pkg"
 UPDATE_PACKAGE "passwall" "Openwrt-Passwall/openwrt-passwall" "main" "pkg"
 UPDATE_PACKAGE "passwall2" "Openwrt-Passwall/openwrt-passwall2" "main" "pkg"
