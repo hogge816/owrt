@@ -6,7 +6,11 @@ name: QCA-NSS-73
 
 #CI计划
 on:
-  #手动编译（本工作流只手动触发，不参与 Auto-Clean 自动链）
+  #分支推送时自动编译（仅本测试分支）
+  push:
+    branches:
+      - nss73
+  #手动编译（需要在默认分支上存在该工作流才能手动触发）
   workflow_dispatch:
     inputs:
       PACKAGE:
