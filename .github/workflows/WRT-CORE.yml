@@ -129,9 +129,17 @@ jobs:
           echo "cache_key=$WRT_CACHE_PREFIX-$WRT_HASH" >> "$GITHUB_OUTPUT"
 
           # GitHub Action 移除国内下载源
+          # 用 jq 过滤而不是 sed 删行：多行 JSON 里删掉数组中间的条目会留下悬空逗号，
+          # download.pl 的 decode_json 会直接报 malformed JSON。
           PROJECT_MIRRORS_FILE="./scripts/projectsmirrors.json"
           if [ -f "$PROJECT_MIRRORS_FILE" ]; then
-            sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
+            if jq -e . "$PROJECT_MIRRORS_FILE" >/dev/null 2>&1; then
+              jq 'with_entries(.value |= map(select(test("\\.cn/|tencent|aliyun")|not)))' \
+                "$PROJECT_MIRRORS_FILE" > "$PROJECT_MIRRORS_FILE.tmp" &&
+                mv "$PROJECT_MIRRORS_FILE.tmp" "$PROJECT_MIRRORS_FILE"
+            else
+              sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
+            fi
           fi
 
       - name: Check Scripts
