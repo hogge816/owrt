@@ -63,7 +63,9 @@ env:
 jobs:
   core:
     name: ${{inputs.WRT_SOURCE}}
-    runs-on: ubuntu-latest
+    #init_build_environment.sh 只支持 20.04/22.04，24.04 实测可用；
+    #ubuntu-latest 已滚到 26.04，会在初始化步骤直接报 Unsupported OS。
+    runs-on: ubuntu-24.04
     outputs:
       cache_prefix: ${{steps.initialize-values.outputs.cache_prefix}}
       cache_key: ${{steps.clone-code.outputs.cache_key}}
