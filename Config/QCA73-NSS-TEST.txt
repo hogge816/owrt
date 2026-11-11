@@ -3,17 +3,22 @@ CONFIG_TARGET_qualcommax=y
 CONFIG_TARGET_qualcommax_ipq807x=y
 CONFIG_TARGET_MULTI_PROFILE=y
 CONFIG_TARGET_PER_DEVICE_ROOTFS=y
-#设备列表（先只放两块板上机验证：AX3600 是上游测试板，AX6 是同平台常见板）
-CONFIG_TARGET_DEVICE_qualcommax_ipq807x_DEVICE_xiaomi_ax3600=y
-CONFIG_TARGET_DEVICE_qualcommax_ipq807x_DEVICE_redmi_ax6=y
-#测试内核：qualcommax 目标里 KERNEL_TESTING_PATCHVER:=7.3，这里打开才会真正编 7.3
+#设备列表
+CONFIG_TARGET_DEVICE_qualcommax_ipq807x_DEVICE_redmi_ax6-stock=y
+#测试内核：qualcommax 目标里 KERNEL_TESTING_PATCHVER:=7.3
 CONFIG_TESTING_KERNEL=y
 #PPE + NSS 卸载栈
 CONFIG_PACKAGE_kmod-nss-wifi-drv=y
 CONFIG_ATH11K_NSS_WIFI=y
 CONFIG_PACKAGE_kmod-nft-bridge=y
 CONFIG_PACKAGE_wpad-openssl=y
-#基础 LuCI，方便上机看状态
+#WiFi 基础（默认已带 ath11k 固件，这里显式锁定，避免被精简掉）
+CONFIG_PACKAGE_ath11k-firmware-ipq8074=y
+CONFIG_PACKAGE_kmod-ath11k=y
+CONFIG_PACKAGE_kmod-ath11k-ahb=y
+CONFIG_PACKAGE_wifi-scripts=y
+CONFIG_PACKAGE_iwinfo=y
+#基础 LuCI
 CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_luci-mod-status=y
 CONFIG_PACKAGE_luci-mod-network=y
